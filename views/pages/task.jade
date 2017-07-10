@@ -1,0 +1,17 @@
+extends ../layout
+block content
+	.w-1200
+		form(action='/task/add',method='post')
+			ul
+				li
+					span 名称
+					input(type='text',name='title')
+				li
+					span 描述
+					textarea(type='text',name='comments')
+				li
+					span 附件
+					input(type='text',name='creatime')
+				li
+					input(type='reset',value='重置')
+					input(type='submit',value='确定')

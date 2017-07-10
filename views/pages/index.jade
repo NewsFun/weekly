@@ -2,7 +2,12 @@ extends ../layout
 block meta
 	link(rel='stylesheet', href='/styles/index.css')
 block content
+	.nav
 	.w-1200
 		h1= title
 		p Welcome back: #{user}
+		ul.tools
+			li
+				a(href='/task') 创建任务
+
 	
