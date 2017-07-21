@@ -15,7 +15,10 @@ var taskSchema = new mongoose.Schema({
 });
 
 taskSchema.pre('save', function (next) {
-	if(this.isNew) this.creatime = Date.now();
+	if(this.isNew){
+		this.creatime = Date.now();
+		this.state = 0;
+	}
 	next();
 });
 

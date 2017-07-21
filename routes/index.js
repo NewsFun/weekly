@@ -21,18 +21,20 @@ router.post('/index', function (req, res, next) {
 });
 
 router.post('/task.add', function (req, res, next) {
-	var id = req.body._id;
 	var takeeObj = req.body;
+	var id = takeeObj._id;
 	var _takee;
-	
-	if(id !== 'undefined'){
+	if(typeof(id) !== 'undefined'){
 		// 修改日程
-		Taskee.findById(id, function(err, timee){
+		Taskee.findById(id, function(err, takee){
 			if(err) console.log(err);
 			_takee = _.extend(_takee, takeeObj);
-			_takee.save(function(err, timee){
-				if(err) console.log(err);
-				// res.redirect('/task.com/'+timee._id);
+			_takee.save(function(err, takee){
+				if(err){
+					console.log(err);
+				}else{
+					res.redirect('/task.com/'+takee._id);
+				}
 			});
 		});
 	}else{
@@ -42,9 +44,12 @@ router.post('/task.add', function (req, res, next) {
 			title: takeeObj.title,
 			comments: takeeObj.comments
 		});
-		_takee.save(function(err, timee){
-			if(err) console.log(err);
-			// res.redirect('/task/new/'+timee._id);
+		_takee.save(function(err, takee){
+			if(err){
+				console.log(err);
+			}else{
+				res.redirect('/task/new/'+takee._id);
+			}
 		});
 	}
 });
@@ -52,7 +57,7 @@ router.post('/task.add', function (req, res, next) {
 router.delete('/task.delete', function (req, res) {
 	var id = req.query.id;
 	if(id){
-		Timee.remove({_id: id}, function (err, timee) {
+		takee.remove({_id: id}, function (err, takee) {
 			if(err){
 				console.log(err);
 			}else{
