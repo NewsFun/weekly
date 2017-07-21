@@ -4,11 +4,17 @@ var taskSchema = new mongoose.Schema({
 	creator:String,
 	title:String,
 	comments:String,
-	player:Array,
-	state:Number,
+	hunter:Array,
+	state:{
+		type:Number,
+		default:0
+	},
 	creatime:Date,
 	update:[{
-		updatime:Date,
+		updatime:{
+			type:Date,
+			default:Date.now()
+		},
 		updatmsg:String
 	}],
 	endtime:Date
@@ -17,7 +23,6 @@ var taskSchema = new mongoose.Schema({
 taskSchema.pre('save', function (next) {
 	if(this.isNew){
 		this.creatime = Date.now();
-		this.state = 0;
 	}
 	next();
 });

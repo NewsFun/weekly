@@ -5,19 +5,16 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('login', { title: 'Weekly' });
+	res.render('login');
 });
 
 router.get('/task', function(req, res, next) {
-	res.render('task', { title: 'Weekly' });
+	res.render('task');
 });
 
 router.post('/index', function (req, res, next) {
 	var user = req.body.username;
-	res.render('index',{
-		title:'Weekly',
-		user:user
-	});
+	res.render('index',{user:user});
 });
 
 router.post('/task.add', function (req, res, next) {
