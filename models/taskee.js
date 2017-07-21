@@ -25,4 +25,4 @@ taskSchema.statics = {
 	}
 };
 
-moudule.exports = taskSchema;
+module.exports = taskSchema;
