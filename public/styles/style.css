@@ -1,12 +1,8 @@
-html,body {
-  padding: 0;
-  margin: 0;
-  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-a {
-  color: #00B7FF;
-  cursor: pointer;
-}
+*{margin:0;padding:0;}
+html{font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;}
+a {text-decoration: none;cursor: pointer;}
+a:hover{color: #00B7FF;}
+.unstyle{list-style: none;}
 .w-1200{
 	width: 100%;
 	max-width: 1200px;

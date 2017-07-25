@@ -9,7 +9,10 @@ var taskSchema = new mongoose.Schema({
 		type:Number,
 		default:0
 	},
-	creatime:Date,
+	creatime:{
+		type:Date,
+		default:Date.now()
+	},
 	update:[{
 		updatime:{
 			type:Date,
@@ -21,13 +24,18 @@ var taskSchema = new mongoose.Schema({
 });
 
 taskSchema.pre('save', function (next) {
-	if(this.isNew){
+	/*if(this.isNew){
 		this.creatime = Date.now();
-	}
+	}*/
 	next();
 });
 
 taskSchema.statics = {
+	//遍历所有数据
+	fetch: function(cb){
+		return this.find({}).sort('creatime').exec(cb);
+	},
+	//通过id查找
 	findById:function (id, cb) {
 		return this.findOne({_id:id}).exec(cb);
 	}

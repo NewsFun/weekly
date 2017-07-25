@@ -4,6 +4,7 @@ block content
 		form(action='/task.add',method='post')
 			ul
 				li
+					input(type='hidden',name='creator',value='#{user}')
 					span 名称
 					input(type='text',name='title')
 				li
