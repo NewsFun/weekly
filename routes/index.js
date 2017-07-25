@@ -4,13 +4,9 @@ var Taskee = require('./model').Taskee;
 var router = express.Router();
 var _user = {};
 /* GET home page. */
-router.get('/', function(req, res, next) {
-	renderIndex();
-});
+router.get('/', renderIndex);
 
-router.post('/', function (req, res, next) {
-	renderIndex();
-});
+router.post('/', renderIndex);
 
 router.get('/login', function (req, res, next) {
 	res.render('login');
@@ -67,10 +63,13 @@ router.delete('/task.delete', function (req, res) {
 		});
 	}
 });
-function renderIndex() {
+function renderIndex(req, res, next) {
 	_user = req.body.username;
 	Taskee.fetch(function (err, data) {
 		if(err) console.log(err);
+		for(var i = 0;i<data.length;i++){
+			console.log(data[i].creatime.toLocaleDateString());
+		}
 		res.render('index',{
 			tasks:data,
 			user:_user
