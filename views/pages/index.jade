@@ -3,13 +3,13 @@ block meta
 	link(rel='stylesheet', href='/styles/index.css')
 block content
 	.w-1200
-		- if(user)
-			p welcome: #{user}
+		- if(uname)
+			p welcome: #{uname}
 			a(href='/task') 创建任务
 		ul.unstyle
 			each task in tasks
 				li
-					a(href='/task/'+task._id) #{task.title}
+					a(href='/task.com/'+task._id) #{task.title}
 					span #{task.creatime}
 				
 				

@@ -4,12 +4,12 @@ block content
 		form(action='/task.add',method='post')
 			ul
 				li
-					input(type='hidden',name='creator',value='#{user}')
+					input(type='hidden',name='creator',value='#{uname}')
 					span 名称
 					input(type='text',name='title')
 				li
 					span 描述
-					textarea(type='text',name='comments')
+					textarea(type='text',name='content')
 				li
 					span 附件
 					input(type='text',name='creatime')

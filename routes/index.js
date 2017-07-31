@@ -8,15 +8,29 @@ router.get('/', renderIndex);
 
 router.post('/', renderIndex);
 
-router.get('/login', function (req, res, next) {
+router.get('/login', function (req, res) {
 	res.render('login');
 });
 
-router.get('/task', function(req, res, next) {
-	res.render('task',{user:_user});
+router.get('/task', function(req, res) {
+	res.render('task',{uname:_user.name});
 });
 
-router.post('/task.add', function (req, res, next) {
+router.get('/task.com/:id',function (req, res) {
+	var id = req.params.id;
+	if(id){
+		Taskee.findById(id, function (err, data){
+			if(err) console.log(err);
+			var dt = JSON.parse(JSON.stringify(data));
+			dt.creatime = formatDate(data.creatime);
+			dt.uname = _user.name;
+			dt.iftake = ifTakeTask(dt.hunter);
+			res.render('tshow', dt);
+		});
+	}
+});
+
+router.post('/task.add', function (req, res) {
 	var takeeObj = req.body;
 	var id = takeeObj._id;
 	var _takee;
@@ -26,27 +40,16 @@ router.post('/task.add', function (req, res, next) {
 			if(err) console.log(err);
 			_takee = _.extend(_takee, takeeObj);
 			_takee.save(function(err, takee){
-				if(err){
-					console.log(err);
-				}else{
-					res.json({success:1});
-					// res.redirect('/task.com/'+takee._id);
-				}
+				if(err) console.log(err);
+				res.redirect('/task.com/'+takee._id);
 			});
 		});
 	}else{
 		// 创建日程
-		_takee = new Taskee({
-			creator: takeeObj.creator,
-			title: takeeObj.title,
-			comments: takeeObj.comments
-		});
+		_takee = new Taskee(takeeObj);
 		_takee.save(function(err, takee){
-			if(err){
-				console.log(err);
-			}else{
-				res.json({success:1});
-			}
+			if(err) console.log(err);
+			res.redirect('/task.com/'+takee._id);
 		});
 	}
 });
@@ -55,25 +58,41 @@ router.delete('/task.delete', function (req, res) {
 	var id = req.query.id;
 	if(id){
 		takee.remove({_id: id}, function (err, takee) {
-			if(err){
-				console.log(err);
-			}else{
-				res.json({success:1});
-			}
+			if(err) console.log(err);
+			res.json({success:1});
 		});
 	}
 });
+
+function ifTakeTask(hunter) {
+	var len = hunter.length;
+	if(len<1) return false;
+	for(var i = 0;i<len;i++){
+		if(hunter[i] === _user.name) return true;
+		return false;
+	}
+}
+
 function renderIndex(req, res, next) {
-	_user = req.body.username;
+	_user.name = req.body.username;
+	var dt = [];
 	Taskee.fetch(function (err, data) {
 		if(err) console.log(err);
 		for(var i = 0;i<data.length;i++){
-			console.log(data[i].creatime.toLocaleDateString());
+			var n = JSON.parse(JSON.stringify(data[i]));
+			n.creatime = formatDate(data[i].creatime);
+			dt.push(n);
 		}
 		res.render('index',{
-			tasks:data,
-			user:_user
+			tasks:dt,
+			uname:_user.name
 		});
 	});
+}
+
+function formatDate(date) {
+	var ld = date.toLocaleDateString();
+	var lt = date.toLocaleTimeString();
+	return ld+' '+lt;
 }
 module.exports = router;

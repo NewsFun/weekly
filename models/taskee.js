@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var taskSchema = new mongoose.Schema({
-	creator:String,
 	title:String,
-	comments:String,
+	content:String,
+	creator:String,
 	hunter:Array,
 	state:{
 		type:Number,
@@ -18,16 +18,10 @@ var taskSchema = new mongoose.Schema({
 			type:Date,
 			default:Date.now()
 		},
-		updatmsg:String
+		updatmsg:String,
+		visitor:String
 	}],
 	endtime:Date
-});
-
-taskSchema.pre('save', function (next) {
-	/*if(this.isNew){
-		this.creatime = Date.now();
-	}*/
-	next();
 });
 
 taskSchema.statics = {
