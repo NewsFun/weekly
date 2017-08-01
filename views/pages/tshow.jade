@@ -6,11 +6,11 @@ block content
 			span 发布者：#{creator}
 			span= creatime
 		.content= content
-		.operat
+		#operat.operat
 			- if(iftake)
-				a(href="/task.take") 放弃任务
+				a(data-type="abandon") 放弃任务
 			- else
-				a(href="/task.take") 接受任务
+				a(data-type="take") 接受任务
 			- if(uname == creator)
-				a(href="#") 指定成员
-		
+				a(data-type="assign") 分配任务
+	script(src="/js/task-content.js")

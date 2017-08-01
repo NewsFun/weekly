@@ -2,7 +2,8 @@ doctype html
 html
 	head
 		title Weekly
-		link(rel='stylesheet', href='/styles/style.css')
+		link(rel='stylesheet', href='/css/style.css')
+		script(src="/libs/jquery-3.2.1.min.js")
 		block meta
 	body
 		nav
@@ -10,5 +11,8 @@ html
 				a(href="") home
 				a(href="") renwu
 				a(href="") jingxuan
-				a(href="/login") login
+				- if(uname)
+					a#users(href="/users/#{uname}") #{uname}
+				- else
+					a(href="/login") login
 		block content

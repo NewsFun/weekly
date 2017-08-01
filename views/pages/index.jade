@@ -1,6 +1,6 @@
 extends ../layout
 block meta
-	link(rel='stylesheet', href='/styles/index.css')
+	link(rel='stylesheet', href='/css/index.css')
 block content
 	.w-1200
 		- if(uname)
@@ -9,7 +9,7 @@ block content
 		ul.unstyle
 			each task in tasks
 				li
-					a(href='/task.com/'+task._id) #{task.title}
+					a(href='/task/'+task._id) #{task.title}
 					span #{task.creatime}
 				
 				

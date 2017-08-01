@@ -5,8 +5,9 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 	res.send('hello! this is the users module');
 });
-router.get('/users', function(req, res, next) {
-	res.send('hello world');
+router.get('/:uname', function(req, res, next) {
+	var uname = req.params.uname;
+	res.render('users',{uname:uname});
 });
 
 module.exports = router;

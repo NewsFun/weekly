@@ -16,40 +16,55 @@ router.get('/task', function(req, res) {
 	res.render('task',{uname:_user.name});
 });
 
-router.get('/task.com/:id',function (req, res) {
+router.get('/task/:id',function (req, res) {
 	var id = req.params.id;
 	if(id){
 		Taskee.findById(id, function (err, data){
 			if(err) console.log(err);
 			var dt = JSON.parse(JSON.stringify(data));
 			dt.creatime = formatDate(data.creatime);
-			dt.uname = _user.name;
 			dt.iftake = ifTakeTask(dt.hunter);
+			dt.uname = _user.name;
 			res.render('tshow', dt);
 		});
 	}
 });
 
 router.post('/task.add', function (req, res) {
-	var takeeObj = req.body;
-	var id = takeeObj._id;
+	var bod = req.body;
+	var id = bod._id;
 	var _takee;
 	if(typeof(id) !== 'undefined'){
 		// 修改日程
 		Taskee.findById(id, function(err, takee){
 			if(err) console.log(err);
-			_takee = _.extend(_takee, takeeObj);
+			_takee = _.extend(takee, bod);
 			_takee.save(function(err, takee){
 				if(err) console.log(err);
-				res.redirect('/task.com/'+takee._id);
+				res.redirect('/task/'+takee._id);
 			});
 		});
 	}else{
 		// 创建日程
-		_takee = new Taskee(takeeObj);
+		_takee = new Taskee(bod);
 		_takee.save(function(err, takee){
 			if(err) console.log(err);
-			res.redirect('/task.com/'+takee._id);
+			res.redirect('/task/'+takee._id);
+		});
+	}
+});
+
+router.post('/task.take', function (req, res) {
+	var bod = req.body;
+	var id = bod._id;
+	if(typeof(id)!=='undefined'){
+		Taskee.findById(id, function (err, data) {
+			if(err) console.log(err);
+			data.hunter.push(bod.name);
+			data.save(function(err, takee){
+				if(err) console.log(err);
+				res.json({success:1});
+			});
 		});
 	}
 });
