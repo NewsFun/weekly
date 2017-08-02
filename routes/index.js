@@ -2,7 +2,6 @@ var express = require('express');
 var _ = require('underscore');
 var Taskee = require('./model').Taskee;
 var router = express.Router();
-var _user = {};
 /* GET home page. */
 router.get('/', renderIndex);
 
@@ -89,7 +88,7 @@ function ifTakeTask(hunter) {
 }
 
 function renderIndex(req, res, next) {
-	_user.name = req.body.username;
+	// _user.name = req.body.username;
 	var dt = [];
 	Taskee.fetch(function (err, data) {
 		if(err) console.log(err);
