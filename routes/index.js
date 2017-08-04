@@ -35,12 +35,12 @@ router.post('/task.add', function (req, res) {
 	var _takee;
 	if(typeof(id) !== 'undefined'){
 		// 修改日程
-		Taskee.findById(id, function(err, takee){
+		Taskee.findById(id, function(err, takee1){
 			if(err) console.log(err);
-			_takee = _.extend(takee, bod);
-			_takee.save(function(err, takee){
+			_takee = _.extend(takee1, bod);
+			_takee.save(function(err, takee2){
 				if(err) console.log(err);
-				res.redirect('/task/'+takee._id);
+				res.redirect('/task/'+takee2._id);
 			});
 		});
 	}else{
@@ -88,7 +88,6 @@ function ifTakeTask(hunter) {
 }
 
 function renderIndex(req, res, next) {
-	// _user.name = req.body.username;
 	var dt = [];
 	Taskee.fetch(function (err, data) {
 		if(err) console.log(err);
