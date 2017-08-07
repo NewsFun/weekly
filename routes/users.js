@@ -49,11 +49,10 @@ router.post('/add',function (req, res) {
 router.post('/update',function (req, res) {
 	var user = req.body;
 	var id = user._id;
-	var _usee;
 	if(typeof(id) !== 'undefined'){
 		Useree.findById(id, function(err, usee1){
 			if(err) console.log(err);
-			_usee = _.extend(usee1, user);
+			var _usee = _.extend(usee1, user);
 			_usee.save(function(err, usee2){
 				if(err) console.log(err);
 				res.json({success:1});
