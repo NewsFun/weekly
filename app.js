@@ -11,6 +11,7 @@ var users = require('./routes/users');
 
 var app = express();
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/weekly');
 // view engine setup
 app.set('views', path.join(__dirname, 'views/pages'));

@@ -18,7 +18,6 @@ userSchema.statics = {
 	fetch: function(cb){
 		return this.find({}).sort('uname').exec(cb);
 	},
-	//通过id查找
 	findById:function (id, cb) {
 		return this.findOne({_id:id}).exec(cb);
 	},

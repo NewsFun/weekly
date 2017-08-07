@@ -6,11 +6,16 @@ var router = express.Router();
 /* 登陆校验 */
 router.post('/', function(req, res) {
 	var user = req.body;
-	var uname = user.username;
+	var uname = user.uname;
 	if(uname){
 		Useree.findByName(uname, function (err, usee) {
 			if(usee){
-				if(usee.upwd === user.pwd) res.redirect('/');
+				if(usee.upwd === user.upwd){
+					_user = usee;
+					res.json({success:1});
+				}else{
+					res.json({success:0});
+				}
 			}else{
 				res.json({success:0});
 			}
@@ -19,28 +24,43 @@ router.post('/', function(req, res) {
 		res.json({success:0});
 	}
 });
-
-router.post('.add',function (req, res) {
+/*注册用户*/
+router.post('/add',function (req, res) {
+	var user = req.body;
+	var uname = user.uname;
+	if(uname){
+		Useree.findByName(uname, function (err, usee) {
+			if(usee){
+				res.json({success:0});
+			}else{
+				var _usee = new Useree(user);
+				_usee.save(function(err, usee){
+					if(err) console.log(err);
+					_user = usee;
+					res.json({success:1});
+				});
+			}
+		});
+	}else{
+		res.json({success:0});
+	}
+});
+/*修改信息*/
+router.post('/update',function (req, res) {
 	var user = req.body;
 	var id = user._id;
 	var _usee;
 	if(typeof(id) !== 'undefined'){
-		/*修改信息*/
 		Useree.findById(id, function(err, usee1){
 			if(err) console.log(err);
 			_usee = _.extend(usee1, user);
 			_usee.save(function(err, usee2){
 				if(err) console.log(err);
-				res.redirect('/user/'+usee2._id);
+				res.json({success:1});
 			});
 		});
 	}else{
-		/*注册用户*/
-		_usee = new Useree(user);
-		_usee.save(function(err, usee){
-			if(err) console.log(err);
-			res.redirect('/user/'+usee._id);
-		});
+		res.json({success:0});
 	}
 });
 
