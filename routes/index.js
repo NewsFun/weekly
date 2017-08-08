@@ -98,7 +98,7 @@ function renderIndex(req, res, next) {
 		}
 		res.render('index',{
 			tasks:dt,
-			uname:_user.name
+			uname:_user.uname
 		});
 	});
 }

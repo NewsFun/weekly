@@ -8,7 +8,7 @@
 	function handle() {
 		submit.on('click',function (e) {
 			var msg = getFormMsg(form);
-			postUserMsg(path, msg);
+			postUserMsg(path, msg, goBack);
 		});
 		signin.on('click',function (e) {
 			var msg = getFormMsg(form);
@@ -27,21 +27,23 @@
 		return msg;
 	}
 
-	function postUserMsg(url, msg) {
+	function postUserMsg(url, msg, cb) {
 		$.ajax({
 			url: url,
 			type: 'POST',
 			dataType: 'json',
 			data: msg
-		})
-		.done(function(data) {
-			console.log(data);
+		}).done(function(data) {
+			// console.log(data);
 			if(!data.success){
 				msge.html('用户名或密码错误！');
 			}else{
-				msge.html('成功！');
+				if(cb) cb();
 			}
 		});
+	}
+	function goBack() {
+		win.location.href = '/';
 	}
 
 	handle();
