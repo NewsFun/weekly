@@ -42,8 +42,9 @@
 			}
 		});
 	}
+
 	function goBack() {
-		win.location.href = '/';
+		win.location.replace(win.document.referrer);
 	}
 
 	handle();
