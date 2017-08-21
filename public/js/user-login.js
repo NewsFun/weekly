@@ -8,9 +8,10 @@
 	function handle() {
 		submit.on('click',function (e) {
 			var msg = getFormMsg(form);
-			postUserMsg(path, msg, goBack);
+			postUserMsg(path, msg);
 		});
 		signin.on('click',function (e) {
+			console.log('signin');
 			var msg = getFormMsg(form);
 			postUserMsg(path+'/add', msg);
 		});
@@ -35,10 +36,11 @@
 			data: msg
 		}).done(function(data) {
 			// console.log(data);
-			if(!data.success){
-				msge.html('用户名或密码错误！');
-			}else{
+			if(data.success){
 				if(cb) cb();
+				goBack();
+			}else{
+				msge.html('用户名或密码错误！');
 			}
 		});
 	}

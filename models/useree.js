@@ -10,7 +10,8 @@ var userSchema = new mongoose.Schema({
 		default:Date.now()
 	},
 	uptime:Date,
-	tasks:Array
+	t_now:Array,
+	t_his:Array
 });
 
 userSchema.statics = {

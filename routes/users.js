@@ -62,9 +62,21 @@ router.post('/update',function (req, res) {
 		res.json({success:0});
 	}
 });
-
+/*个人首页*/
 router.get('/:uname', function(req, res) {
 	var uname = req.params.uname;
+	/*Useree.findByName(uname, function (err, usee) {
+		if(usee){
+			res.json({success:0});
+		}else{
+			var _usee = new Useree(user);
+			_usee.save(function(err, usee){
+				if(err) console.log(err);
+				_user = usee;
+				res.json({success:1});
+			});
+		}
+	});*/
 	res.render('users',{uname:uname});
 });
 
