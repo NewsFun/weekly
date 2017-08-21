@@ -5,13 +5,17 @@ var userSchema = new mongoose.Schema({
 	alias:String,
 	upwd:String,
 	cellnum:String,
+	team:Array,
 	udate:{
 		type:Date,
 		default:Date.now()
 	},
 	uptime:Date,
-	t_now:Array,
-	t_his:Array
+	tasks:{
+		now:String,
+		undone:Array,
+		done:Array
+	}
 });
 
 userSchema.statics = {
