@@ -65,19 +65,14 @@ router.post('/update',function (req, res) {
 /*个人首页*/
 router.get('/:uname', function(req, res) {
 	var uname = req.params.uname;
-	/*Useree.findByName(uname, function (err, usee) {
+	Useree.findByName(uname, function (err, usee) {
+		if(err) console.log(err);
 		if(usee){
-			res.json({success:0});
+			res.render('users', usee);
 		}else{
-			var _usee = new Useree(user);
-			_usee.save(function(err, usee){
-				if(err) console.log(err);
-				_user = usee;
-				res.json({success:1});
-			});
+			res.json({success:0});
 		}
-	});*/
-	res.render('users',{uname:uname});
+	});
 });
 
 module.exports = router;

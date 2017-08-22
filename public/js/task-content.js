@@ -25,7 +25,7 @@
 			dataType: 'json',
 			data: data
 		}).done(function (data) {
-			console.log(data);
+			alert(data.success);
 		});
 	}
 })(window, jQuery);
